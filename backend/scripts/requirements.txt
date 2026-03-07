@@ -1,0 +1,16 @@
+# YouTube Auto-Uploader Dependencies
+
+# Core Selenium
+selenium>=4.15.0
+
+# Chrome WebDriver manager
+webdriver-manager>=4.0.0
+
+# Optional: For better browser automation
+playwright>=1.40.0
+
+# For HTTP requests (if needed)
+requests>=2.31.0
+
+# For logging
+colorlog>=6.8.0

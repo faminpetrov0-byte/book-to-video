@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
+}
+
+model Project {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String
+  description    String?
+  sourceType     String
+  sourceFormat   String
+  sourceFilePath String
+  extractedText  String?
+  status         String   @default("created")
+  totalDuration  Float?
+  defaultVoice   String   @default("Rachel") // Default voice for TTS
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  scenes         Scene[]
+  videos         Video[]
+  characters     Character[]
+}
+
+model Character {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name      String   // Character name (e.g., "Narrator", "Young Man", "Alex")
+  voiceId   String?  // ElevenLabs voice ID
+  voiceName String?  // Human-readable voice name
+  description String? // Character description for voice selection
+  color     String?  // UI color for this character
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model Scene {
+  id              String          @id @default(uuid())
+  projectId       String
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  orderIndex      Int
+  title           String?
+  textContent     String
+  imagePrompt     String?
+  duration        Float           @default(10)
+  characters      String?         // JSON: [{"name": "Narrator", "voice": "Rachel"}, {"name": "Alex", "voice": "Josh"}]
+  location        String?
+  mood            String?
+  narratorText   String?         // Text specifically for narrator (if different from scene text)
+  status          String          @default("pending")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  generatedMedia  GeneratedMedia[]
+}
+
+model GeneratedMedia {
+  id          String   @id @default(uuid())
+  sceneId     String
+  scene       Scene    @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  mediaType   String   // "image" | "video" | "audio"
+  filePath    String
+  contentHash String
+  promptUsed  String?
+  modelUsed   String?
+  metadata    String?  // JSON: { "voiceUsed": "Rachel", "character": "Narrator" }
+  selected    Boolean  @default(false)
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+
+  @@index([contentHash])
+  @@index([sceneId, mediaType])
+}
+
+model Video {
+  id           String   @id @default(uuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  filePath     String
+  format       String   @default("mp4")
+  resolution   String   @default("720p")
+  duration     Float?
+  fileSize     Int?
+  renderParams String?
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+
+  @@index([projectId])
+}
