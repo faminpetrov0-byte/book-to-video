@@ -34,10 +34,21 @@ backend/src/
 │   │   ├── base/          # Интерфейсы
 │   │   ├── image/         # SDXL, HuggingFace, Local
 │   │   ├── tts/           # Coqui, ElevenLabs, System
-│   │   ├── local/          # 🔥 Ollama, LM Studio, Local SD
+│   │   ├── local/         # Ollama, LM Studio, Local SD
+│   │   ├── apple/         # 🍎 Apple Native
+│   │   │   ├── AppleMLProviders.ts    # Vision, Speech, NLP
+│   │   │   └── AppleNativeProviders.ts # RealityKit, ARKit
 │   │   └── ProviderManager.ts
-│   └── videoProcessor.ts  # 🔥 Slideshow, Clips, Filters
+│   └── videoProcessor.ts  # Slideshow, Clips, Filters
 └── routes/                 # API
+
+ios/BookToVideo/            # 🍎 Vision Pro App
+├── App/
+├── Features/
+│   ├── AR/                # ARKit integration
+│   ├── Immersive/         # RealityKit player
+│   └── Video/            # Spatial video export
+└── Services/             # ML, Vision, Speech
 ```
 
 ---
@@ -177,7 +188,32 @@ Slideshow → SVD → Ken Burns Effect
 
 ---
 
-## 📄 Лицензия
+## 🍎 Apple ML Integration
+
+For native iOS/macOS apps, integrate Apple frameworks:
+
+```swift
+// Vision - OCR and image analysis
+import Vision
+let request = VNRecognizeTextRequest()
+request.recognitionLevel = .accurate
+
+// Speech - Speech to text
+import Speech
+let recognizer = SFSpeechRecognizer()
+let request = SFSpeechURLRecognitionRequest(url: audioURL)
+
+// Natural Language
+import NaturalLanguage
+let tagger = NLTagger(tagSchemes: [.nameType, .sentimentScore])
+```
+
+### Mobile App (Future)
+- SwiftUI + Swift
+- Core ML for on-device inference
+- Vision for image processing
+- Speech for STT
+- Foundation Models for local LLM
 
 MIT
 

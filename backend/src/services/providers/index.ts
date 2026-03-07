@@ -11,5 +11,24 @@ export { HuggingFaceProvider, StabilityAIProvider, LocalImageProvider, imageProv
 // TTS Providers
 export { ElevenLabsProvider, CoquiTTSProvider, SystemTTSProvider, ttsProviders, TTSProviderRegistry } from './tts/TTSProviders';
 
+// Apple ML Providers (Vision, Speech, NLP)
+export { 
+  VisionTextRecognitionProvider, 
+  SpeechRecognitionProvider, 
+  NaturalLanguageProvider, 
+  appleMLProviders,
+  AppleMLProviderRegistry 
+} from './apple/AppleMLProviders';
+
+// Apple Native Providers (RealityKit, ARKit, Spatial Video)
+export { 
+  RealityKitProvider, 
+  ARKitProvider, 
+  SpatialVideoProvider, 
+  AppleNativeBridge,
+  appleNativeProviders,
+  AppleNativeProviderRegistry 
+} from './apple/AppleNativeProviders';
+
 // Unified Manager
 export { providerManager, ProviderManager, type ProviderStatus } from './ProviderManager';
