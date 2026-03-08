@@ -32,3 +32,13 @@ export {
 
 // Unified Manager
 export { providerManager, ProviderManager, type ProviderStatus } from './ProviderManager';
+
+// LiveKit Providers
+export { 
+  LiveKitProvider,
+  LiveKitAgentProvider,
+  LiveKitEgressProvider,
+  LiveKitIngressProvider,
+  livekitProviders,
+  LiveKitProviderRegistry 
+} from './livekit/LiveKitProviders';

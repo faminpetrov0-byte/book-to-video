@@ -14,6 +14,7 @@ import aiRoutes from './routes/ai';
 import renderRoutes from './routes/render';
 import youtubeRoutes from './routes/youtube';
 import providerRoutes from './routes/providers';
+import livekitRoutes from './routes/livekit';
 import { wsManager } from './core/WebSocketServer';
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api', aiRoutes); // /api/ai/* - models, presets, music
 app.use('/api', renderRoutes); // /api/render/:projectId
 app.use('/api', youtubeRoutes); // /api/youtube/*
 app.use('/api', providerRoutes); // /api/providers/*
+app.use('/api', livekitRoutes); // /api/livekit/*
 app.use('/api', generateRoutes); // /api/jobs/:id
 
 // Health check

@@ -22,6 +22,47 @@
 
 ---
 
+## 🔴 LiveKit Integration (Real-time Video & AI Agents)
+
+| Компонент | Описание | Для чего |
+|-----------|---------|---------|
+| **LiveKit Server** | WebRTC SFU | Видео стриминг/коллаборация |
+| **AI Narrator Agent** | Voice AI | AI озвучка персонажей |
+| **Egress** | Recording | Запись/экспорт сессий |
+| **Ingress** | RTMP/WHIP | Live вход (OBS) |
+
+### LiveKit Routes
+
+```bash
+POST /api/livekit/room       # Create room token
+POST /api/livekit/agent/start # Start AI narrator
+POST /api/livekit/egress/start # Start recording
+POST /api/livekit/ingress    # Create RTMP/WHIP ingress
+GET  /api/livekit/status     # Provider status
+```
+
+### Запуск AI Narrator
+
+```bash
+# Python (livekit-agents)
+pip install "livekit-agents[openai,deepgram,cartesia,silero]"
+
+# Run narrator agent
+python backend/scripts/livekit_narrator.py --text "Your story here"
+```
+
+### Frontend Components
+
+```tsx
+import { 
+  LiveKitVideoRoom, 
+  AINarratorPanel, 
+  VideoConference 
+} from './components/livekit';
+```
+
+---
+
 ## 🏗 Архитектура
 
 ```
